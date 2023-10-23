@@ -3,10 +3,10 @@
 Little programs to learn the basic concepts of the Rust programming language
 
 ## Useful sites
-* (https://doc.rust-lang.org/stable/book/)
-* (https://tourofrust.com/TOC_en.html)
-* (https://doc.rust-lang.org/rust-by-example/)
-* (https://midu.dev/rust-para-desarrolladores-javascript/)
+* https://doc.rust-lang.org/stable/book/
+* https://tourofrust.com/TOC_en.html
+* https://doc.rust-lang.org/rust-by-example/
+* https://midu.dev/rust-para-desarrolladores-javascript/
 
 ## Compilation
 
