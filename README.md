@@ -1,8 +1,13 @@
 # Learning Rust
 
-Programas pequeños para aprender los conceptos básicos del lenguaje de programación Rust
-
 Little programs to learn the basic concepts of the Rust programming language
+
+## Useful sites
+* [](https://doc.rust-lang.org/stable/book/)
+* [](https://tourofrust.com/TOC_en.html)
+* [](https://doc.rust-lang.org/rust-by-example/)
+* [](https://midu.dev/rust-para-desarrolladores-javascript/)
+
 ## Compilation
 
 With `cargo init`  we create a proyect in which we can use `cargo run` to compile and run our program. The binaty is saved in `target/debug/<file_name>`.
