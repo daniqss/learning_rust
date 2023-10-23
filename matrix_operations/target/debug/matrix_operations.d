@@ -1,0 +1,1 @@
+/home/ranicocs/Proyectos/rust/learning_rust/matrix_operations/target/debug/matrix_operations: /home/ranicocs/Proyectos/rust/learning_rust/matrix_operations/src/main.rs /home/ranicocs/Proyectos/rust/learning_rust/matrix_operations/src/matrix_operations.rs
