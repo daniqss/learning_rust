@@ -8,6 +8,9 @@ Little programs to learn the basic concepts of the Rust programming language
 * https://doc.rust-lang.org/rust-by-example/
 * https://midu.dev/rust-para-desarrolladores-javascript/
 
+## Specific information
+* [Ownership](ownership/Ownership.md)
+
 ## Compilation
 
 With `cargo init`  we create a proyect in which we can use `cargo run` to compile and run our program. The binaty is saved in `target/debug/<file_name>`.
