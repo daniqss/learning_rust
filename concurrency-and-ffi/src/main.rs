@@ -1,67 +1,76 @@
 use std::thread::JoinHandle;
-use std::{sync::Mutex, thread};
+use std::thread;
 use std::time::{Instant, Duration};
 
 fn main() {
-    // let handler: Vec<_> = (0..10).map(|_| {
-    //     let mut n = Mutex::new(0);
-    //     thread::spawn(|| {
-    //         for _ in 0..500000000 {
-    //             n.lock().unwrap();
-    //             *n += 1;
-    //         }
-    //         *n
-    //     })
-    // }).collect();
+    let one = study_times(100, 10_000, 1);
+    let twelve = study_times(100, 100_000, 12);
+    println!("one: {:?} twelve: {:?}", one, twelve);
 
-    let handler: Vec<JoinHandle<i32>> = (0..1).map(|_| {
-        thread::spawn(move || {
-            let n = Mutex::new(0);
-            for _ in 0..50000000 {
-                let mut n = n.lock().unwrap();
-                *n += 1;
-                // El bloqueo se libera automáticamente cuando n sale del ámbito.
-            }
-            n.into_inner().unwrap()  // Devuelve el valor interior del Mutex después de que todos los incrementos hayan terminado.
-        })
-    }).collect();
-
-    for h in handler {
-        match h.join() {
-            Ok(n) => {println!("Thread finished with count: {}", n);},
-            Err(e) => println!("Thread failed: {:?}", e),
-        }
-    }
+    println!("==================================="); 
+    
+    let one = study_times(100, 100_000, 1);
+    let twelve = study_times(100, 1_000_000, 12);
+    println!("one: {:?} twelve: {:?}", one, twelve);
 
 }
 
-fn count(count: u32, threads: u32) -> Vec<JoinHandle<u32>> {
-    let handler: Vec<_> = (0..threads).map(|_| {
+fn counter(_count: u32, threads: u32) -> Vec<JoinHandle<u32>> {
+    let handler: Vec<_> = (0..threads).map(|_count| {
         thread::spawn(move || {
-            let n = Mutex::new(0);
-            for _ in 0..count {
-                let mut n = n.lock().unwrap();
-                *n += 1;
-                // El bloqueo se libera automáticamente cuando n sale del ámbito.
+            let mut n = 0;
+            for _ in 0.._count {
+                n += 1;
             }
-            n.into_inner().unwrap()  // Devuelve el valor interior del Mutex después de que todos los incrementos hayan terminado.
+            n
         })
     }).collect();
     handler
 }
 
-fn time_function(function: fn(u32, u32) -> Vec<JoinHandle<u32>>) -> Duration {
+fn timer(function: fn(u32, u32) -> Vec<JoinHandle<u32>>, count: u32, threads: u32) -> Duration {
     let start = Instant::now();
-    let handler = function(10, 50000000);
-    let end = Instant::now();
+    let handler = function(count, threads);
     
     for h in handler {
         match h.join() {
-            Ok(n) => {println!("Thread finished with count: {}", n);},
+            Ok(_) => (),
             Err(e) => println!("Thread failed: {:?}", e),
         }
     }
-
+    let end = Instant::now();
+    
     end.duration_since(start)
 
+}
+
+fn study_times (iterations:u32, count: u32, threads: u32) -> Duration {
+    let mut total_time = Duration::from_secs(0);
+
+    for i in 0..iterations {
+        let counting_time = timer(counter, count, threads);
+
+        let printing_time = if i % 50 == 0 {
+            let start_printing = Instant::now();
+            println!("====================");
+            println!("Iteration: {} of 100", i);
+            println!("Time: {:?} with {} threads counting to {}", counting_time.as_micros(), threads, count);
+            let end_printing = Instant::now();
+            Some(end_printing.duration_since(start_printing))
+        }
+        else {
+            None
+        };
+
+        match printing_time {
+            Some(t) =>  t + counting_time,
+            None => counting_time
+        };
+        total_time += counting_time;
+    }
+
+    let promedy = total_time / iterations;
+    println!("====================");
+    println!("Promedy time: {:?} with {} threads counting to {}", promedy.as_micros(), threads, count);
+    promedy
 }
