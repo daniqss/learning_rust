@@ -14,4 +14,4 @@
 
 !ownership/
 !product/
-!concurrency-and-ffi/
+!concurrency-and-ffi/*
