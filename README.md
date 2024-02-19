@@ -10,6 +10,7 @@ Little programs to learn the basic concepts of the Rust programming language
 
 ## Specific information
 * [Ownership](ownership/Ownership.md)
+* [Concurrency](concurrency-and-ffi/Concurrency.md)
 
 ## Compilation
 
