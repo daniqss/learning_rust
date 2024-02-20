@@ -42,3 +42,15 @@ To share data between threads, we use the `std::sync` module. The `Mutex` type i
 
 ```rust
 use std::sync::{Arc, Mutex};
+
+let counter = Arc::new(Mutex::new(0));
+
+for _ in 0..10 {
+    let counter = Arc::clone(&counter);
+    std::thread::spawn(move || {
+        let mut num = counter.lock().unwrap();
+        *num += 1;
+    });
+}
+```
+
