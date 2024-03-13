@@ -1,17 +1,2 @@
-# Ignorar todo
-*
-
-# Permitir archivos Markdown (.md)
-!*.md
-
-# Permitir carpetas src
-!src/
-!src/**
-
-# Permitir archivos con extensión .rs y carpetas que contienen .rs
-!*.rs
-!*/*.rs
-
-!ownership/
-!product/
-!concurrency-and-ffi/
+target/
+ctr-solver
