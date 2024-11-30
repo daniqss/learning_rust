@@ -2,7 +2,7 @@ use std::fs;
 use std::io::{BufRead, BufReader, Write};
 use std::net::{TcpListener, TcpStream};
 use std::sync::Arc;
-// use std::thread;
+use std::thread;
 
 const HOST: &str = "localhost:8080";
 const FILE: &str = "public/index.html";
@@ -14,7 +14,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     loop {
         let (stream, _) = socket.accept()?;
-        handle_connection(stream, file.clone())?
+        let content = file.clone();
+
+        thread::spawn(move || handle_connection(stream, content).unwrap());
     }
 }
 
